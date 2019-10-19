@@ -28,8 +28,8 @@ func main() {
 		log.Error("Failed to create a new shemat", err)
 	}
 
-	httpHandler := handler.new(&handler.Config{
-		shemat: shemat,
+	httpHandler := handler.New(&handler.Config{
+		Schema: &shemat,
 	})
 
 	http.Handle("/", httpHandler)
