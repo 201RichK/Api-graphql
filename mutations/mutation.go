@@ -5,6 +5,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
+// GetRootFields returns all the available mutations.
 func GetRootField() graphql.Fields {
 	return graphql.Fields{
 		"createUser": GetCreateMutation(),
@@ -25,11 +26,11 @@ func GetCreateMutation() *graphql.Field {
 		},
 		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 			user := &types.Users{
-				Firstname: params.Args["firsname"].(string),
+				Firstname: params.Args["firstname"].(string),
 				Lastname:  params.Args["lastname"].(string),
 			}
 
-			//Add user to database here
+			// Add your user in database here
 
 			return user, nil
 		},
