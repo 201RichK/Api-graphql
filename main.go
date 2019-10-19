@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/201RichK/graphql/graphql-test/queries"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 	log "github.com/sirupsen/logrus"
@@ -15,7 +16,7 @@ func main() {
 	shematConfig := graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name:   "Rootquery",
-			Fields: nil,
+			Fields: queries.GetRootField(),
 		}),
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
 			Name:   "Mutation",

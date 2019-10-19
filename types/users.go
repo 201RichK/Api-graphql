@@ -8,6 +8,7 @@ type Users struct {
 	ID        int    `json:"id"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
+	Role      []*Role
 }
 
 //user role definition
