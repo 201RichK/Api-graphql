@@ -33,7 +33,7 @@ var UserType = graphql.NewObject(graphql.ObjectConfig{
 				// Implement logic to retrieve user associated roles from user id here.
 
 				return role, nil
-			},
+			} ,
 		},
 	},
 })

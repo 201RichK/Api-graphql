@@ -1,7 +1,7 @@
 package queries
 
 import (
-	"github.com/201RichK/graphql/graphql-test/types"
+	"github.com/201RichK/graphql/types"
 	"github.com/graphql-go/graphql"
 )
 
