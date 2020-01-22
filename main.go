@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	_ "github.com/201RichK/graphql/db"
 
-	mutation "github.com/201RichK/graphql/graphql-test/mutations"
-	"github.com/201RichK/graphql/graphql-test/queries"
+	mutation "github.com/201RichK/graphql/mutations"
+	"github.com/201RichK/graphql/queries"
+	"github.com/friendsofgo/graphiql"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 	log "github.com/sirupsen/logrus"
@@ -33,8 +35,13 @@ func main() {
 	httpHandler := handler.New(&handler.Config{
 		Schema: &shemat,
 	})
-
+	
+	graphiqlHandler, err := graphiql.NewGraphiqlHandler("/")
+	if err != nil {
+		panic(err)
+	}
 	http.Handle("/", httpHandler)
+	http.Handle("/graphiql", graphiqlHandler)
 
 	port := os.Getenv("port")
 	if port == "" {
