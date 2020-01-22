@@ -1,0 +1,11 @@
+vendor
+.idea
+Api-graphql
+.DS_Store
+
+
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
