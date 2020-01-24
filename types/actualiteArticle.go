@@ -8,17 +8,17 @@ import (
 )
 
 type ActualiteArticle struct {
-	Id           int                 `json:"id"`
-	Titre        string              `json:"titre"`
-	Image        string              `json:"image"`
-	ArticleTexte string              `json"article_text"`
-	Lien         string              `json:"lien"`
-	IntroTexte   string              `json:"intro_texte"`
-	Date         string              `json:"date"`
-	Statut       bool                `json:"statut"`
-	DateAdd      string              `json:"date_add"`
-	DateUpd      time.Time           `json:"date_upd"`
-	Categorie    *ActualiteCategorie `json:"categorie"`
+	Id           int                 `json:"id" orm:"column(id)"`
+	Titre        string              `json:"titre" orm:"column(titre)"`
+	Image        string              `json:"image" orm:"column(image)"`
+	ArticleTexte string              `json"article_text" orm:"column(article_text)"`
+	Lien         string              `json:"lien" orm:"column(lien)"`
+	IntroTexte   string              `json:"intro_texte" orm:"column(intro_texte)"`
+	Date         string              `json:"date" orm:"column(date)"`
+	Statut       bool                `json:"statut" orm:"column(statut)"`
+	DateAdd      string              `json:"date_add" orm:"column(date_add)"`
+	DateUpd      time.Time           `json:"date_upd" orm:"column(date_upd);type(timestamp with time zone)"`
+	Categorie    *ActualiteCategorie `json:"categorie" orm:"rel(fk)"`
 }
 
 func (t *ActualiteArticle) TableName() string {
@@ -26,7 +26,7 @@ func (t *ActualiteArticle) TableName() string {
 }
 
 func init() {
-	orm.RegisterModel(new(ActualiteArticle))
+	orm.RegisterModel(&ActualiteArticle{})
 }
 
 //actualiteArticle type use to specify which field can access
