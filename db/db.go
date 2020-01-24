@@ -3,6 +3,7 @@ package db
 import (
 	"runtime"
  	"github.com/astaxie/beego/orm"
+	_ "github.com/lib/pq"
 )
 
 
