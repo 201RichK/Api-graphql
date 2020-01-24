@@ -8,12 +8,12 @@ import (
 )
 
 type ActualiteMotCle struct {
-	Id          int       `json:"id"`
-	Mot         string    `json:"mot"`
-	Statut      bool      `json:"statut"`
-	DateUpd     time.Time `json:"date_upd"`
-	DateAdd     time.Time `json:"date_add"`
-	CategorieId int64     `json:"categorie_id"`
+	Id          int       `json:"id" orm:"column(id)"`
+	Mot         string    `json:"mot" orm:"column(mot)"`
+	Statut      bool      `json:"statut" orm:"column(statut)"`
+	DateUpd     time.Time `json:"date_upd" orm:"column(date_upd);type(timestamp with time zone)"`
+	DateAdd     time.Time `json:"date_add" orm:"column(date_add)"`
+	CategorieId int64     `json:"categorie_id" orm:"column(categorie_id)"`
 }
 
 func (t *ActualiteMotCle) TableName() string {
@@ -21,10 +21,10 @@ func (t *ActualiteMotCle) TableName() string {
 }
 
 func init() {
-	orm.RegisterModel(new(ActualiteMotCle))
+	orm.RegisterModel(&ActualiteMotCle{})
 }
 
-var actualiteMotCle = graphql.NewObject(graphql.ObjectConfig{
+var MotCle = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Actualite_mot_cle",
 	Fields: graphql.Fields{
 		"id":           &graphql.Field{Type: graphql.Int},
@@ -35,3 +35,20 @@ var actualiteMotCle = graphql.NewObject(graphql.ObjectConfig{
 		"categorie_id": &graphql.Field{Type: graphql.Int},
 	},
 })
+
+// AddActualiteMotCle insert a new ActualiteMotCle into database and returns
+// last inserted Id on success.
+func AddActualiteMotCle(m *ActualiteMotCle) (Iscreated bool, id int64, err error) {
+	o := orm.NewOrm()
+	Iscreated, id, err = o.ReadOrCreate(m, "mot")
+	return
+}
+
+//SelectActualiteMotCle Select all ActualiteMotCle into the database and returns
+//[]ActualiteArticel
+func SelectAllMotCle() ([]*ActualiteMotCle, error) {
+	o := orm.NewOrm()
+	var motCle []*ActualiteMotCle
+	_, err := o.QueryTable(&ActualiteMotCle{}).All(&motCle)
+	return motCle, err
+}
