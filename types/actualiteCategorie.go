@@ -15,13 +15,12 @@ type ActualiteCategorie struct {
 	DateUpd time.Time `json:"date_upd"`
 }
 
-
 func (t *ActualiteCategorie) TableName() string {
 	return "actualite_categorie"
 }
 
 func init() {
-	orm.RegisterModel(new(ActualiteCategorie))
+	orm.RegisterModel(&ActualiteCategorie{})
 }
 
 //usertype is use by the GRAPHQL API to specify which field can be access
