@@ -1,8 +1,18 @@
 package types
 
 import (
+	"time"
+
 	"github.com/graphql-go/graphql"
 )
+
+type ActualiteCategorie struct {
+	Id int `json:"id"`
+	Nom string `json:"nom"`
+	Statut bool `json:"statut"`
+	DateAdd time.Time `json:"date_add"`
+	DateUpd time.Time `json:"date_upd"`
+}
 
 type Users struct {
 	ID        int    `json:"id"`
@@ -33,7 +43,7 @@ var UserType = graphql.NewObject(graphql.ObjectConfig{
 				// Implement logic to retrieve user associated roles from user id here.
 
 				return role, nil
-			} ,
+			},
 		},
 	},
 })
