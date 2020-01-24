@@ -2,10 +2,11 @@ package db
 
 import (
 	"runtime"
- 	"github.com/astaxie/beego/orm"
-	_ "github.com/lib/pq"
-)
 
+	"github.com/astaxie/beego/orm"
+	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
+)
 
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
@@ -18,4 +19,5 @@ func init() {
 		panic(err)
 	}
 	orm.Debug = false
+	log.Info("Connected to database ...")
 }
