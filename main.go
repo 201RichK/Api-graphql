@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	_ "github.com/201RichK/graphql/db"
 
+	_ "github.com/201RichK/graphql/db"
 	mutation "github.com/201RichK/graphql/mutations"
 	"github.com/201RichK/graphql/queries"
+	_ "github.com/201RichK/graphql/types"
 	"github.com/friendsofgo/graphiql"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -29,13 +30,13 @@ func main() {
 
 	shemat, err := graphql.NewSchema(shematConfig)
 	if err != nil {
-		log.Error("Failed to create a new shemat", err)
+		panic(err)
 	}
 
 	httpHandler := handler.New(&handler.Config{
 		Schema: &shemat,
 	})
-	
+
 	graphiqlHandler, err := graphiql.NewGraphiqlHandler("/")
 	if err != nil {
 		panic(err)
