@@ -1,18 +1,17 @@
 package types
 
 import (
-	"time"
-
-	"github.com/astaxie/beego/orm"
+	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
+	"github.com/jinzhu/gorm"
 )
 
 type ActualiteCategorie struct {
-	Id      int       `json:"id"`
-	Nom     string    `json:"nom"`
-	Statut  bool      `json:"statut"`
-	DateAdd time.Time `json:"date_add"`
-	DateUpd time.Time `json:"date_upd"`
+	gorm.Model       `json:"model"`
+	Nom              string `json:"nom"`
+	Statut           bool   `json:"statut"`
+	ActualiteMotCle  []ActualiteMotCle
+	ActualiteArticle []ActualiteArticle
 }
 
 func (t *ActualiteCategorie) TableName() string {
@@ -20,17 +19,14 @@ func (t *ActualiteCategorie) TableName() string {
 }
 
 func init() {
-	orm.RegisterModel(&ActualiteCategorie{})
+	db.Db.AutoMigrate(ActualiteCategorie{})
 }
 
 //usertype is use by the GRAPHQL API to specify which field can be access
 var actualiteCategorie = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Actualite_Categorie",
 	Fields: graphql.Fields{
-		"id":       &graphql.Field{Type: graphql.Int},
-		"nom":      &graphql.Field{Type: graphql.String},
-		"statut":   &graphql.Field{Type: graphql.Boolean},
-		"date_add": &graphql.Field{Type: graphql.DateTime},
-		"date_upd": &graphql.Field{Type: graphql.DateTime},
+		"nom":    &graphql.Field{Type: graphql.String},
+		"statut": &graphql.Field{Type: graphql.Boolean},
 	},
 })

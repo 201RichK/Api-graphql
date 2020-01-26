@@ -3,21 +3,24 @@ package db
 import (
 	"runtime"
 
-	"github.com/astaxie/beego/orm"
+	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
+)
+
+var (
+	Db  *gorm.DB
+	err error
 )
 
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	orm.RegisterDriver("postgres", orm.DRPostgres)
-	orm.RegisterDataBase("default", "postgres", "postgres://postgres:password@localhost/media?sslmode=disable")
-
-	err := orm.RunSyncdb("default", false, true)
+	Db, err = gorm.Open("postgres", "postgres:password@localhost/media?sslmode=disable&charset=utf8")
 	if err != nil {
+		logrus.Error("Gorm Database connection failed to open")
 		panic(err)
 	}
-	orm.Debug = false
-	log.Info("Connected to database ...")
+
+	logrus.Info("Database connection established")
 }

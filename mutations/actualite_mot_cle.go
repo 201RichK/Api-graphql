@@ -1,8 +1,6 @@
 package mutation
 
 import (
-	"time"
-
 	"github.com/201RichK/graphql/types"
 	"github.com/graphql-go/graphql"
 )
@@ -38,20 +36,18 @@ func GetCreateMutation() graphql.Fields {
 					Type: graphql.NewNonNull(graphql.Int),
 				},
 			},
-			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+			Resolve: func(params graphql.ResolveParams) error {
 
-				iscreated, _, err := types.AddActualiteMotCle(&types.ActualiteMotCle{
+				err := types.AddActualiteMotCle(&types.ActualiteMotCle{
 					Mot:         params.Args["mot"].(string),
 					Statut:      params.Args["statut"].(bool),
-					DateUpd:     params.Args["date_upt"].(time.Time),
-					DateAdd:     params.Args["date_add"].(time.Time),
-					CategorieId: params.Args["categorie_id"].(int64),
+					CategorieID: params.Args["categorie_id"].(int64),
 				})
 				if err != nil {
-					return nil, err
+					return err
 				}
 
-				return iscreated, nil
+				return nil
 			},
 		},
 	}
