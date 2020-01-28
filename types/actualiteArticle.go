@@ -3,9 +3,11 @@ package types
 import (
 	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
+	"github.com/jinzhu/gorm"
 )
 
 type ActualiteArticle struct {
+	gorm.Model   `json:"model"`
 	Titre        string `json:"titre"`
 	Image        string `json:"image"`
 	ArticleTexte string `json"article_text"`
