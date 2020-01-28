@@ -14,7 +14,7 @@ type ActualiteMotCle struct {
 }
 
 func (t *ActualiteMotCle) TableName() string {
-	return "actualite_article"
+	return "actualite_mot_cle"
 }
 
 func init() {
