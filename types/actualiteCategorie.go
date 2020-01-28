@@ -12,7 +12,7 @@ type ActualiteCategorie struct {
 	Statut           bool   `json:"statut"`
 	ActualiteMotCle  []ActualiteMotCle
 	ActualiteArticle []ActualiteArticle
-}
+}	
 
 func (t *ActualiteCategorie) TableName() string {
 	return "actualite_categorie"
