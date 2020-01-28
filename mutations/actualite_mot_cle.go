@@ -26,17 +26,11 @@ func GetCreateMutation() graphql.Fields {
 				"statut": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.Boolean),
 				},
-				"date_add": &graphql.ArgumentConfig{
-					Type: graphql.NewNonNull(graphql.DateTime),
-				},
-				"data_upd": &graphql.ArgumentConfig{
-					Type: graphql.NewNonNull(graphql.DateTime),
-				},
 				"categorie_id": &graphql.ArgumentConfig{
 					Type: graphql.NewNonNull(graphql.Int),
 				},
 			},
-			Resolve: func(params graphql.ResolveParams) error {
+			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 
 				err := types.AddActualiteMotCle(&types.ActualiteMotCle{
 					Mot:         params.Args["mot"].(string),
@@ -44,10 +38,10 @@ func GetCreateMutation() graphql.Fields {
 					CategorieID: params.Args["categorie_id"].(int64),
 				})
 				if err != nil {
-					return err
+					return nil, err
 				}
 
-				return nil
+				return "Okay", nil
 			},
 		},
 	}
