@@ -16,7 +16,7 @@ var (
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	Db, err = gorm.Open("postgres", "postgres:password@localhost/media?sslmode=disable&charset=utf8")
+	Db, err = gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=media password=password sslmode=disable")
 	if err != nil {
 		logrus.Error("Gorm Database connection failed to open")
 		panic(err)
