@@ -46,9 +46,9 @@ func main() {
 
 	port := os.Getenv("port")
 	if port == "" {
-		port = ":8080"
+		port = ":8090"
 	}
-	log.Info("listen on port 8080")
+	log.Info("listen on port 8090")
 
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(port), nil))
 }
