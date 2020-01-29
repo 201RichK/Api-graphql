@@ -1,5 +1,5 @@
 vendor
-tmp
+./tmp
 .idea
 Api-graphql
 .DS_Store
