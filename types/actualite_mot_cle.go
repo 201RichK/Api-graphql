@@ -24,6 +24,7 @@ func init() {
 var MotCle = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Actualite_mot_cle",
 	Fields: graphql.Fields{
+		"id":     &graphql.Field{Type: graphql.Int},
 		"mot":    &graphql.Field{Type: graphql.String},
 		"statut": &graphql.Field{Type: graphql.Boolean},
 		"categorie": &graphql.Field{
@@ -47,7 +48,7 @@ func AddActualiteMotCle(m *ActualiteMotCle) error {
 //[]ActualiteArticel
 func SelectAllMotCle() ([]*ActualiteMotCle, error) {
 	var motCle []*ActualiteMotCle
-	err := db.Db.Find(ActualiteMotCle{}).Scan(motCle).Error
+	err := db.Db.Find(ActualiteMotCle{}).Scan(motCle).Error  
 	if err != nil {
 		return nil, err
 	}
