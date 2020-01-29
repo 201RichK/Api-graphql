@@ -15,7 +15,8 @@ func GetRootField() graphql.Fields {
 // GetUserQuery returns the queries available against user type.
 func GetMotCleQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(types.MotCle),
+		Type:        graphql.NewList(types.MotCle),
+		Description: "Get mot cle list",
 		Resolve: func(param graphql.ResolveParams) (interface{}, error) {
 			var motCle []*types.ActualiteMotCle
 
@@ -23,7 +24,7 @@ func GetMotCleQuery() *graphql.Field {
 			if err != nil {
 				return nil, err
 			}
-			return &motCle, nil
+			return motCle, nil
 		},
 	}
 }
