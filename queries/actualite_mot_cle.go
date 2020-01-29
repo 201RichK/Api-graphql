@@ -8,7 +8,7 @@ import (
 //GeRootFiels return all  the available queries
 func GetRootField() graphql.Fields {
 	return graphql.Fields{
-		"actualite_mo_cle": GetMotCleQuery(),
+		"actualite_mot_cle": GetMotCleQuery(),
 	}
 }
 
