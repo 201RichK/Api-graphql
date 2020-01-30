@@ -16,11 +16,15 @@ var (
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
+	logrus.Info("Database connection established")
+}
+
+func Conn() (*gorm.DB, error) {
 	Db, err = gorm.Open("postgres", "host=localhost port=5432 user=RichK dbname=media password=password sslmode=disable")
 	if err != nil {
 		logrus.Error("Gorm Database connection failed to open")
-		panic(err)
+		return nil, err
 	}
 
-	logrus.Info("Database connection established")
+	return Db, nil
 }
