@@ -8,13 +8,14 @@ import (
 // GetUserQuery returns the queries available against user type.
 func GetMotCleQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(types.MotCle),
+		Type:        graphql.NewList(types.MotCle),
+		Description: "Get mot cle list",
 		Resolve: func(param graphql.ResolveParams) (interface{}, error) {
 			motCle, err := types.SelectAllMotCle()
 			if err != nil {
 				return nil, nil
 			}
-			return &motCle, nil
+			return motCle, nil
 		},
 	}
 }
