@@ -64,3 +64,19 @@ func SelectAllMotCle() (motCles []*ActualiteMotCle, err error) {
 
 	return
 }
+
+//Select mot  where id = ?
+func SelectMocleId(id int64) (mots []*ActualiteMotCle, err error) {
+	db, err := db.Conn()
+	if err != nil {
+		log.Warn("Select mot cle by Id error ", err)
+	}
+	defer db.Close()
+
+	err = db.Model(&ActualiteMotCle{}).Where("id = ?", id).Find(&mots).Error
+	if err != nil {
+		log.Errorf("Error finding all mot wher id == %d ", id, err)
+		return
+	}
+	return
+}
