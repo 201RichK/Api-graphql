@@ -2,6 +2,7 @@ package mutation
 
 import (
 	"fmt"
+
 	"github.com/201RichK/graphql/types"
 	"github.com/graphql-go/graphql"
 )
@@ -14,9 +15,8 @@ func GetRootField() graphql.Fields {
 // GetCreateUserMutation creates a new user and returns it.
 func GetCreateMutation() graphql.Fields {
 	return graphql.Fields{
-		/*
-			Create new actualite_mot_cle
-		*/
+
+		// Create new actualite_mot_cle
 		"create": &graphql.Field{
 			Type:        types.MotCle,
 			Description: "create new mot clé for the actualite table",
