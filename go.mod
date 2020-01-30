@@ -10,5 +10,6 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/lib/pq v1.1.1
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
+	github.com/siddontang/go v0.0.0-20180604090527-bdc77568d726
 	github.com/sirupsen/logrus v1.4.2
 )
