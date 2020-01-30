@@ -15,8 +15,6 @@ var (
 
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
-
-	logrus.Info("Database connection established")
 }
 
 func Conn() (*gorm.DB, error) {
