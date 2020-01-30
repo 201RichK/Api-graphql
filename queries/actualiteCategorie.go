@@ -1,10 +1,10 @@
 package queries
 
-import "github.com/graphql-go/graphql"
-
-import "github.com/201RichK/graphql/types"
-
-import "github.com/siddontang/go/log"
+import (
+	"github.com/201RichK/graphql/types"
+	"github.com/graphql-go/graphql"
+	"github.com/siddontang/go/log"
+)
 
 func GetCateoriesQueries() *graphql.Field {
 	return &graphql.Field{
