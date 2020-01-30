@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/201RichK/graphql/db"
 	mutation "github.com/201RichK/graphql/mutations"
-	"github.com/201RichK/graphql/queries"
+	"github.com/201RichK/graphql/root"
 	_ "github.com/201RichK/graphql/types"
 	"github.com/friendsofgo/graphiql"
 	"github.com/graphql-go/graphql"
@@ -16,14 +16,13 @@ import (
 )
 
 func main() {
-
 	shematConfig := graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
-			Name:   "RootQuery",
-			Fields: queries.GetRootField(),
+			Name:   "query",
+			Fields: root.GetMotCleField(),
 		}),
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
-			Name:   "RootMutation",
+			Name:   "mutation",
 			Fields: mutation.GetRootField(),
 		}),
 	}
@@ -34,7 +33,10 @@ func main() {
 	}
 
 	httpHandler := handler.New(&handler.Config{
-		Schema: &shemat,
+		Schema:     &shemat,
+		Pretty:     true,
+		GraphiQL:   true,
+		Playground: true,
 	})
 
 	graphiqlHandler, err := graphiql.NewGraphiqlHandler("/")
