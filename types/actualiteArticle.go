@@ -11,7 +11,7 @@ type ActualiteArticle struct {
 	Id           int64      `json:"id"`
 	Titre        string     `json:"titre"`
 	Image        string     `json:"image"`
-	ArticleTexte string     `json"article_text"`
+	ArticleTexte string     `json:"article_text"`
 	Lien         string     `json:"lien"`
 	IntroTexte   string     `json:"intro_texte"`
 	Date         string     `json:"date"`
@@ -59,7 +59,7 @@ func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 	defer db.Close()
 	//var articles []*ActualiteArticle
 
-	err = db.Model(&ActualiteArticle{}).Find(&Article).Error
+	err = db.Model(&ActualiteArticle{}).Find(&articles).Error
 	if err != nil {
 		log.Error("error query Actualite_article ", err)
 		return
