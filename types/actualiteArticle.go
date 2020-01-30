@@ -3,19 +3,22 @@ package types
 import (
 	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
-	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
+	"time"
 )
 
 type ActualiteArticle struct {
-	gorm.Model   `json:"model"`
-	Titre        string `json:"titre"`
-	Image        string `json:"image"`
-	ArticleTexte string `json"article_text"`
-	Lien         string `json:"lien"`
-	IntroTexte   string `json:"intro_texte"`
-	Date         string `json:"date"`
-	Statut       bool   `json:"statut"`
-	CategorieID  int64  `json:"categorie"`
+	Id           int64      `json:"id"`
+	Titre        string     `json:"titre"`
+	Image        string     `json:"image"`
+	ArticleTexte string     `json"article_text"`
+	Lien         string     `json:"lien"`
+	IntroTexte   string     `json:"intro_texte"`
+	Date         string     `json:"date"`
+	Statut       bool       `json:"statut"`
+	CreatedAt    *time.Time `json:"createdAt"`
+	UpdatedAt    *time.Time `json:"updatedAt"`
+	CategorieID  int64      `json:"categorie"`
 }
 
 func (t *ActualiteArticle) TableName() string {
@@ -23,13 +26,19 @@ func (t *ActualiteArticle) TableName() string {
 }
 
 func init() {
-	db.Db.AutoMigrate(ActualiteArticle{})
+	Db, err := db.Conn()
+	defer Db.Close()
+	if err != nil {
+		log.Error(err)
+	}
+	Db.AutoMigrate(ActualiteArticle{})
 }
 
 //actualiteArticle type use to specify which field can access
-var actualiteArticle = graphql.NewObject(graphql.ObjectConfig{
-	Name: "Actualite_Article",
+var Article = graphql.NewObject(graphql.ObjectConfig{
+	Name: "articles",
 	Fields: graphql.Fields{
+		"id":           &graphql.Field{Type: graphql.Int},
 		"titre":        &graphql.Field{Type: graphql.String},
 		"image":        &graphql.Field{Type: graphql.String},
 		"article_text": &graphql.Field{Type: graphql.String},
@@ -37,13 +46,24 @@ var actualiteArticle = graphql.NewObject(graphql.ObjectConfig{
 		"intro_text":   &graphql.Field{Type: graphql.String},
 		"date":         &graphql.Field{Type: graphql.String},
 		"statut":       &graphql.Field{Type: graphql.Boolean},
-		"categorie": &graphql.Field{
-			Type: graphql.NewList(actualiteCategorie),
-			Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-				var categorie ActualiteCategorie
-
-				return categorie, nil
-			},
-		},
+		"categorieId":  &graphql.Field{Type: graphql.NewNonNull(graphql.Int)},
 	},
 })
+
+func SelectAllArticle() (articles []*ActualiteArticle, err error) {
+	db, err := db.Conn()
+	if err != nil {
+		log.Error("cant connect to database ", err)
+		return
+	}
+	defer db.Close()
+	//var articles []*ActualiteArticle
+
+	err = db.Model(&ActualiteArticle{}).Find(&Article).Error
+	if err != nil {
+		log.Error("error query Actualite_article ", err)
+		return
+	}
+
+	return
+}

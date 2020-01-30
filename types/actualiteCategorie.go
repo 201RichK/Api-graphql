@@ -1,32 +1,76 @@
 package types
 
 import (
+	"time"
+
 	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
-	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
 )
 
 type ActualiteCategorie struct {
-	gorm.Model       `json:"model"`
-	Nom              string `json:"nom"`
-	Statut           bool   `json:"statut"`
+	ID               int64      `json:"id"`
+	Nom              string     `json:"nom"`
+	Statut           bool       `json:"statut"`
+	CreatedAt        *time.Time `json:"createdAt"`
+	UpdatedAt        *time.Time `json:"updatedAt"`
 	ActualiteMotCle  []ActualiteMotCle
 	ActualiteArticle []ActualiteArticle
-}	
+}
 
 func (t *ActualiteCategorie) TableName() string {
 	return "actualite_categorie"
 }
 
 func init() {
-	db.Db.AutoMigrate(ActualiteCategorie{})
+	Db, err := db.Conn()
+	defer Db.Close()
+	if err != nil {
+		log.Error(err)
+	}
+	Db.AutoMigrate(ActualiteCategorie{})
 }
 
 //usertype is use by the GRAPHQL API to specify which field can be access
-var actualiteCategorie = graphql.NewObject(graphql.ObjectConfig{
+var Catgr = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Actualite_Categorie",
 	Fields: graphql.Fields{
-		"nom":    &graphql.Field{Type: graphql.String},
-		"statut": &graphql.Field{Type: graphql.Boolean},
+		"id":        &graphql.Field{Type: graphql.Int},
+		"nom":       &graphql.Field{Type: graphql.String},
+		"statut":    &graphql.Field{Type: graphql.Boolean},
+		"createdAt": &graphql.Field{Type: graphql.DateTime},
+		"updatedAt": &graphql.Field{Type: graphql.DateTime},
+		"actualiteMotCle": &graphql.Field{
+			Type: graphql.NewList(MotCle),
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				var Mocles []*ActualiteMotCle
+				//actualiteMotCleId := p.Source.(ActualiteMotCle).ID
+
+				return Mocles, nil
+			},
+		},
+		"actualiteArticle": &graphql.Field{
+			Type: graphql.NewList(Article),
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				var articles []*ActualiteArticle
+
+				return articles, nil
+			},
+		},
 	},
 })
+
+func SelectAllCtgr() (actCtgr []*ActualiteCategorie, err error) {
+	db, err := db.Conn()
+	if err != nil {
+		log.Warn(err)
+	}
+	defer db.Close()
+	//var motCles []*ActualiteMotCle
+	err = db.Model(&ActualiteCategorie{}).Find(&actCtgr).Error
+	if err != nil {
+		log.Error("Error quering table actualite_mot_cle", err)
+	}
+
+	return
+}
