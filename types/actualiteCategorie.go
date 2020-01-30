@@ -44,8 +44,12 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 			Type: graphql.NewList(MotCle),
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				var Mocles []*ActualiteMotCle
-				//actualiteMotCleId := p.Source.(ActualiteMotCle).ID
+				actualiteMotCleId := p.Source.(ActualiteMotCle).ID
 
+				Mocles, err := SelectMocleId(actualiteMotCleId)
+				if err != nil {
+					return nil, err
+				}
 				return Mocles, nil
 			},
 		},
@@ -53,7 +57,7 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 			Type: graphql.NewList(Article),
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				var articles []*ActualiteArticle
-
+				// actualiteArticles := p.Source.(ActualiteArticle).ID
 				return articles, nil
 			},
 		},
