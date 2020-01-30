@@ -8,7 +8,7 @@ import (
 )
 
 type ActualiteArticle struct {
-	Id           int64      `json:"id"`
+	ID           int64      `json:"id"`
 	Titre        string     `json:"titre"`
 	Image        string     `json:"image"`
 	ArticleTexte string     `json:"article_text"`
