@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
 	log "github.com/sirupsen/logrus"
@@ -68,14 +69,14 @@ func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 	return
 }
 
-func SelectAllArtId(id int64) (artcicle []*ActualiteArticle, err error) {
+func SelectAllArtId(id int, table string) (artcicle []*ActualiteArticle, err error) {
 	db, err := db.Conn()
 	if err != nil {
 		log.Error(err)
 	}
 	defer db.Close()
 
-	err = db.Model(&ActualiteArticle{}).Where("categorie_id = ?", id).Find(&artcicle).Error
+	err = db.Model(&ActualiteArticle{}).Where(fmt.Sprintf("%s = ?", table), id).Find(&artcicle).Error
 	if err != nil {
 		log.Error("SelectAllArtId error ", err)
 		return
