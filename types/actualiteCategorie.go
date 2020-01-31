@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/201RichK/graphql/db"
@@ -45,7 +46,7 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: func(p graphql.ResolveParams) (Mocles interface{}, err error) {
 				id := p.Source.(*ActualiteCategorie).ID
 
-				Mocles, err = SelectMocleId(id)
+				Mocles, err = SelectMocleId(int(id), "categorie_id")
 				if err != nil {
 					return
 				}
@@ -57,11 +58,10 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 			Resolve: func(p graphql.ResolveParams) (articles interface{}, err error) {
 				id := p.Source.(*ActualiteCategorie).ID
 
-				articles, err = SelectAllArtId(id)
+				articles, err = SelectAllArtId(int(id), "categorie_id")
 				if err != nil {
 					return
 				}
-
 				return
 			},
 		},
@@ -83,18 +83,17 @@ func SelectAllCtgr() (actCtgr []*ActualiteCategorie, err error) {
 	return
 }
 
-func SelectAllctgrId() (ctgr []*ActualiteCategorie, err error) {
+func SelectAllctgrId(id int, table string) (ctgr []*ActualiteCategorie, err error) {
 	db, err := db.Conn()
 	if err != nil {
 		log.Error("error select all categories where id ==> ", err)
 	}
+	defer db.Close()
 
-	err = db.Model(ActualiteCategorie{}).Where("categorie_id = ?").Find(&ctgr).Error
+	err = db.Model(ActualiteCategorie{}).Where(fmt.Sprintf("%s = ?", table), id).Find(&ctgr).Error
 	if err != nil {
 		log.Error("SelectAllctgrId request error ", err)
-
 		return
 	}
-
 	return
 }
