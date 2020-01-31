@@ -9,7 +9,7 @@ import (
 )
 
 type ActualiteArticle struct {
-	ID           int64      `json:"id"`
+	ID           int      `json:"id" gorm:"AUTO_INCREMENT"`
 	Titre        string     `json:"titre"`
 	Image        string     `json:"image"`
 	ArticleTexte string     `json:"article_text"`
@@ -19,7 +19,7 @@ type ActualiteArticle struct {
 	Statut       bool       `json:"statut"`
 	CreatedAt    *time.Time `json:"createdAt"`
 	UpdatedAt    *time.Time `json:"updatedAt"`
-	CategorieID  int64      `json:"categorie"`
+	CategorieID  int      `json:"categorie"`
 }
 
 func (t *ActualiteArticle) TableName() string {
