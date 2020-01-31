@@ -50,7 +50,7 @@ func main() {
 	if port == "" {
 		port = ":8090"
 	}
-	log.Info("listen on port 8090")
+	log.Warnf("listen on port http://127.0.O.1%s", port)
 
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(port), nil))
 }
