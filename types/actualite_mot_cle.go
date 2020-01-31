@@ -1,6 +1,8 @@
 package types
 
 import (
+	"fmt"
+
 	"github.com/201RichK/graphql/db"
 	"github.com/graphql-go/graphql"
 	log "github.com/sirupsen/logrus"
@@ -60,20 +62,21 @@ func SelectAllMotCle() (motCles []*ActualiteMotCle, err error) {
 	err = db.Model(&ActualiteMotCle{}).Find(&motCles).Error
 	if err != nil {
 		log.Error("Error quering table actualite_mot_cle", err)
+		return
 	}
 
 	return
 }
 
-//Select mot  where id = ?
-func SelectMocleId(id int64) (mots []*ActualiteMotCle, err error) {
+//Select mot  where id = ? on table
+func SelectMocleId(id int, table string) (mots []*ActualiteMotCle, err error) {
 	db, err := db.Conn()
 	if err != nil {
 		log.Warn("Select mot cle by Id error ", err)
 	}
 	defer db.Close()
 
-	err = db.Model(&ActualiteMotCle{}).Where("categorie_id = ?", id).Find(&mots).Error
+	err = db.Model(&ActualiteMotCle{}).Where(fmt.Sprintf("%s = ?", table), id).Find(&mots).Error
 	if err != nil {
 		log.Errorf("SelectMocleId error ", id, err)
 		return
