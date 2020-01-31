@@ -21,10 +21,10 @@ func CreateMocle() *graphql.Field {
 				Type: graphql.NewNonNull(graphql.Boolean),
 			},
 			"created_at": &graphql.ArgumentConfig{
-				Type: graphql.NewNonNull(graphql.DateTime),
+				Type: graphql.DateTime,
 			},
 			"updated_at": &graphql.ArgumentConfig{
-				Type: graphql.NewNonNull(graphql.DateTime),
+				Type: graphql.DateTime,
 			},
 			"categorie_id": &graphql.ArgumentConfig{
 				Type: graphql.NewNonNull(graphql.Int),
@@ -35,9 +35,9 @@ func CreateMocle() *graphql.Field {
 			err := types.AddActualiteMotCle(&types.ActualiteMotCle{
 				Mot:         params.Args["mot"].(string),
 				Statut:      params.Args["statut"].(bool),
-				CreatedAt:   params.Args["created_at"].(*time.Time),
-				UpdatedAt:   params.Args["updated_at"].(*time.Time),
-				CategorieID: params.Args["categorie_id"].(int64),
+				CreatedAt:   time.Now(),
+				UpdatedAt:   time.Now(),
+				CategorieID: params.Args["categorie_id"].(int),
 			})
 			if err != nil {
 				return nil, err
