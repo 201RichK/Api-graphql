@@ -6,6 +6,7 @@ import (
 
 	"github.com/201RichK/graphql/types"
 	"github.com/graphql-go/graphql"
+	log "github.com/sirupsen/logrus"
 )
 
 // mutation for creating actualite mot cle
@@ -31,19 +32,21 @@ func CreateMocle() *graphql.Field {
 			},
 		},
 		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-
-			err := types.AddActualiteMotCle(&types.ActualiteMotCle{
+			todo := &types.ActualiteMotCle{
 				Mot:         params.Args["mot"].(string),
 				Statut:      params.Args["statut"].(bool),
 				CreatedAt:   time.Now(),
 				UpdatedAt:   time.Now(),
 				CategorieID: params.Args["categorie_id"].(int),
-			})
+			}
+			err := types.AddActualiteMotCle(todo)
+			log.Println(err)
 			if err != nil {
+				log.Error("CreateMocle error ", err)
 				return nil, err
 			}
 
-			return "Okay", nil
+			return todo, nil
 		},
 	}
 }
