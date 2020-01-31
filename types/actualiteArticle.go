@@ -9,7 +9,7 @@ import (
 )
 
 type ActualiteArticle struct {
-	ID           int      `json:"id" gorm:"AUTO_INCREMENT"`
+	ID           int        `json:"id" gorm:"AUTO_INCREMENT"`
 	Titre        string     `json:"titre"`
 	Image        string     `json:"image"`
 	ArticleTexte string     `json:"article_text"`
@@ -19,7 +19,7 @@ type ActualiteArticle struct {
 	Statut       bool       `json:"statut"`
 	CreatedAt    *time.Time `json:"createdAt"`
 	UpdatedAt    *time.Time `json:"updatedAt"`
-	CategorieID  int      `json:"categorie"`
+	CategorieID  int        `json:"categorie"`
 }
 
 func (t *ActualiteArticle) TableName() string {
@@ -54,7 +54,7 @@ var Article = graphql.NewObject(graphql.ObjectConfig{
 func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 	db, err := db.Conn()
 	if err != nil {
-		log.Error("cant connect to database ", err)
+		log.Error("can't connect to database ", err)
 		return
 	}
 	defer db.Close()
