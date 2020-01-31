@@ -42,23 +42,27 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 		"updatedAt": &graphql.Field{Type: graphql.DateTime},
 		"actualiteMotCle": &graphql.Field{
 			Type: graphql.NewList(MotCle),
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				var Mocles []*ActualiteMotCle
-				actualiteMotCleId := p.Source.(ActualiteMotCle).ID
+			Resolve: func(p graphql.ResolveParams) (Mocles interface{}, err error) {
+				id := p.Source.(*ActualiteCategorie).ID
 
-				Mocles, err := SelectMocleId(actualiteMotCleId)
+				Mocles, err = SelectMocleId(id)
 				if err != nil {
-					return nil, err
+					return
 				}
-				return Mocles, nil
+				return
 			},
 		},
 		"actualiteArticle": &graphql.Field{
 			Type: graphql.NewList(Article),
-			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-				var articles []*ActualiteArticle
-				// actualiteArticles := p.Source.(ActualiteArticle).ID
-				return articles, nil
+			Resolve: func(p graphql.ResolveParams) (articles interface{}, err error) {
+				id := p.Source.(*ActualiteCategorie).ID
+
+				articles, err = SelectAllArtId(id)
+				if err != nil {
+					return
+				}
+
+				return
 			},
 		},
 	},
@@ -74,6 +78,22 @@ func SelectAllCtgr() (actCtgr []*ActualiteCategorie, err error) {
 	err = db.Model(&ActualiteCategorie{}).Find(&actCtgr).Error
 	if err != nil {
 		log.Error("Error quering table actualite_mot_cle", err)
+	}
+
+	return
+}
+
+func SelectAllctgrId() (ctgr []*ActualiteCategorie, err error) {
+	db, err := db.Conn()
+	if err != nil {
+		log.Error("error select all categories where id ==> ", err)
+	}
+
+	err = db.Model(ActualiteCategorie{}).Where("categorie_id = ?").Find(&ctgr).Error
+	if err != nil {
+		log.Error("SelectAllctgrId request error ", err)
+
+		return
 	}
 
 	return
