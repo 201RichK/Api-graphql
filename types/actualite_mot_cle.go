@@ -11,12 +11,12 @@ import (
 )
 
 type ActualiteMotCle struct {
-	ID          int64      `json:"id"`
-	Mot         string     `json:"mot" `
-	Statut      bool       `json:"statut"`
-	CreatedAt   *time.Time `json:"created_at"`
-	UpdatedAt   *time.Time `json:"updated_at"`
-	CategorieID int64      `json:"categorie"`
+	ID          int       `json:"id" gorm:"AUTO_INCREMENT"`
+	Mot         string    `json:"mot" `
+	Statut      bool      `json:"statut"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	CategorieID int       `json:"categorie"`
 }
 
 func (t *ActualiteMotCle) TableName() string {
@@ -47,7 +47,12 @@ var MotCle = graphql.NewObject(graphql.ObjectConfig{
 // AddActualiteMotCle insert a new ActualiteMotCle into database and returns
 // last inserted Id on success.
 func AddActualiteMotCle(m *ActualiteMotCle) error {
-	return db.Db.Create(m).Error
+	db, err := db.Conn()
+	if err != nil {
+		log.Error("AddActualiteMotCle Can't connect to database ", err)
+	}
+	defer db.Close()
+	return db.Create(m).Error
 }
 
 //SelectActualiteMotCle Select all ActualiteMotCle into the database and returns
