@@ -8,7 +8,8 @@ import (
 
 func GetArticleQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(types.Article),
+		Type:        graphql.NewList(types.Article),
+		Description: "Get articles list",
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			articles, err := types.SelectAllArticle()
 			if err != nil {
