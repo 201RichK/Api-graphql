@@ -67,3 +67,19 @@ func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 
 	return
 }
+
+func SelectAllArtId(id int64) (artcicle []*ActualiteArticle, err error) {
+	db, err := db.Conn()
+	if err != nil {
+		log.Error(err)
+	}
+	defer db.Close()
+
+	err = db.Model(&ActualiteArticle{}).Where("categorie_id = ?", id).Find(&artcicle).Error
+	if err != nil {
+		log.Error("SelectAllArtId error ", err)
+		return
+	}
+
+	return
+}
