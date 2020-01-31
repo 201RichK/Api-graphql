@@ -8,7 +8,8 @@ import (
 
 func GetCateoriesQueries() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewList(types.Catgr),
+		Type:        graphql.NewList(types.Catgr),
+		Description: "Get categories list",
 		Resolve: func(p graphql.ResolveParams) (ctgrs interface{}, err error) {
 			ctgrs, err = types.SelectAllCtgr()
 			if err != nil {
