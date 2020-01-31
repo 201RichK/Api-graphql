@@ -73,9 +73,9 @@ func SelectMocleId(id int64) (mots []*ActualiteMotCle, err error) {
 	}
 	defer db.Close()
 
-	err = db.Model(&ActualiteMotCle{}).Where("id = ?", id).Find(&mots).Error
+	err = db.Model(&ActualiteMotCle{}).Where("categorie_id = ?", id).Find(&mots).Error
 	if err != nil {
-		log.Errorf("Error finding all mot wher id == %d ", id, err)
+		log.Errorf("SelectMocleId error ", id, err)
 		return
 	}
 	return
