@@ -6,7 +6,6 @@ import (
 	"os"
 
 	_ "github.com/201RichK/graphql/db"
-	mutation "github.com/201RichK/graphql/mutations"
 	"github.com/201RichK/graphql/root"
 	_ "github.com/201RichK/graphql/types"
 	"github.com/friendsofgo/graphiql"
@@ -23,7 +22,7 @@ func main() {
 		}),
 		Mutation: graphql.NewObject(graphql.ObjectConfig{
 			Name:   "mutation",
-			Fields: mutation.GetRootField(),
+			Fields: root.GetMutationField(),
 		}),
 	}
 
