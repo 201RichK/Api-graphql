@@ -10,7 +10,7 @@ import (
 )
 
 type ActualiteCategorie struct {
-	ID               int64      `json:"id"`
+	ID               int        `json:"id" gorm:"AUTO_INCREMENT"`
 	Nom              string     `json:"nom"`
 	Statut           bool       `json:"statut"`
 	CreatedAt        *time.Time `json:"createdAt"`
