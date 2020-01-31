@@ -2,6 +2,7 @@ package mutation
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/201RichK/graphql/types"
 	"github.com/graphql-go/graphql"
@@ -19,6 +20,12 @@ func CreateMocle() *graphql.Field {
 			"statut": &graphql.ArgumentConfig{
 				Type: graphql.NewNonNull(graphql.Boolean),
 			},
+			"created_at": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.DateTime),
+			},
+			"updated_at": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.DateTime),
+			},
 			"categorie_id": &graphql.ArgumentConfig{
 				Type: graphql.NewNonNull(graphql.Int),
 			},
@@ -28,6 +35,8 @@ func CreateMocle() *graphql.Field {
 			err := types.AddActualiteMotCle(&types.ActualiteMotCle{
 				Mot:         params.Args["mot"].(string),
 				Statut:      params.Args["statut"].(bool),
+				CreatedAt:   params.Args["created_at"].(*time.Time),
+				UpdatedAt:   params.Args["updated_at"].(*time.Time),
 				CategorieID: params.Args["categorie_id"].(int64),
 			})
 			if err != nil {
