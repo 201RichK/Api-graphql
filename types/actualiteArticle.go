@@ -65,7 +65,6 @@ func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 		log.Error("error query Actualite_article ", err)
 		return
 	}
-
 	return
 }
 
@@ -81,6 +80,5 @@ func SelectAllArtId(id int, table string) (artcicle []*ActualiteArticle, err err
 		log.Error("SelectAllArtId error ", err)
 		return
 	}
-
 	return
 }
