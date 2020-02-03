@@ -14,12 +14,12 @@ type ActualiteArticle struct {
 	Image        string     `json:"image"`
 	ArticleTexte string     `json:"article_text"`
 	Lien         string     `json:"lien"`
-	IntroTexte   string     `json:"intro_texte"`
+	IntroTexte   string     `json:"intro_text"`
 	Date         string     `json:"date"`
 	Statut       bool       `json:"statut"`
 	CreatedAt    *time.Time `json:"createdAt"`
 	UpdatedAt    *time.Time `json:"updatedAt"`
-	CategorieID  int        `json:"categorie"`
+	CategorieID  int        `json:"categorieId"`
 }
 
 func (t *ActualiteArticle) TableName() string {
