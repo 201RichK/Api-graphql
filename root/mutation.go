@@ -8,7 +8,11 @@ import (
 //GetMutationField return all  the available mutation fields
 func GetMutationField() graphql.Fields {
 	return graphql.Fields{
-		"create": mutation.CreateMocle(),
-		"update": mutation.UpdateMotCle(),
+		//Mot cle Mutations
+		"createMocle":  mutation.CreateMocle(),
+		"updateMotCLe": mutation.UpdateMotCle(),
+
+		//Articles Mutations
+		"createArticle": mutation.CreateArticle(),
 	}
 }
