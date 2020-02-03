@@ -89,3 +89,17 @@ func SelectMocleId(id int, table string) (mots []*ActualiteMotCle, err error) {
 	}
 	return
 }
+
+//Update actualite mot cle
+func UpdateMotCle(m *ActualiteMotCle) (err error) {
+	db, err := db.Conn()
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	if err = db.Model(&ActualiteMotCle{}).Where("id = ?", m.ID).Take(&ActualiteMotCle{}).Updates(m).Error; err != nil {
+		return
+	}
+
+	return
+}
