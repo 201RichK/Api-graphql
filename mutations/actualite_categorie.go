@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func CreateCagorie() *graphql.Field {
+func CreateCategorie() *graphql.Field {
 	return &graphql.Field{
 		Type:        types.Catgr,
 		Description: "Create actualite categories",
