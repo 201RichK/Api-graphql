@@ -1,4 +1,9 @@
 
+
+#App Configuration
+Application:
+    AppNAme: Graphql-Api
+
 #Server configurations
 server:
     host: 127.0.0.1
