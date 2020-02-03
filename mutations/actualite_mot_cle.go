@@ -1,7 +1,6 @@
 package mutation
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/201RichK/graphql/types"
@@ -56,6 +55,9 @@ func UpdateMotCle() *graphql.Field {
 		Type:        types.MotCle,
 		Description: "Update a mot cle for actualite table",
 		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
 			"mot": &graphql.ArgumentConfig{
 				Type: graphql.NewNonNull(graphql.String),
 			},
@@ -67,13 +69,20 @@ func UpdateMotCle() *graphql.Field {
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			mot, motOk := p.Args["mot"].(string)
-			statut, statutOk := p.Args["statut"].(bool)
-			ctgrID, ctgrIDOk := p.Args["categorie_id"].(int)
+			motCle := &types.ActualiteMotCle{
+				ID:          p.Args["id"].(int),
+				Statut:      p.Args["statut"].(bool),
+				Mot:         p.Args["mot"].(string),
+				UpdatedAt:   time.Now(),
+				CategorieID: p.Args["categorie_id"].(int),
+			}
 
-			fmt.Println(mot, motOk, statut, statutOk, ctgrID, ctgrIDOk)
+			err := types.UpdateMotCle(motCle)
+			if err != nil {
+				return nil, err
+			}
 
-			return nil, nil
+			return motCle, nil
 		},
 	}
 }
