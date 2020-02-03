@@ -14,5 +14,8 @@ func GetMutationField() graphql.Fields {
 
 		//Articles Mutations
 		"createArticle": mutation.CreateArticle(),
+
+		//Categorie Mutations
+		"createCtgr": mutation.CreateCategorie(),
 	}
 }
