@@ -28,7 +28,8 @@ type Config struct {
 	}
 }
 
-func Conf() Config {
+//Decode configuration  file to a structure
+func Conf() *Config {
 	t, err := os.Getwd()
 	if err != nil {
 		logrus.Error("Error get working directory")
@@ -47,5 +48,5 @@ func Conf() Config {
 		logrus.Error("Error get working directory")
 	}
 
-	return cfg
+	return &cfg
 }
