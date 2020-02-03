@@ -52,7 +52,8 @@ func AddActualiteMotCle(m *ActualiteMotCle) error {
 		log.Error("AddActualiteMotCle Can't connect to database ", err)
 	}
 	defer db.Close()
-	return db.Create(m).Error
+
+	return db.Where(ActualiteMotCle{Mot: m.Mot}).Attrs(ActualiteMotCle{Mot: m.Mot}).FirstOrCreate(&m).Error
 }
 
 //SelectActualiteMotCle Select all ActualiteMotCle into the database and returns
