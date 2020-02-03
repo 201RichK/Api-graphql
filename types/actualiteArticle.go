@@ -9,17 +9,17 @@ import (
 )
 
 type ActualiteArticle struct {
-	ID           int        `json:"id" gorm:"AUTO_INCREMENT"`
-	Titre        string     `json:"titre"`
-	Image        string     `json:"image"`
-	ArticleTexte string     `json:"article_text"`
-	Lien         string     `json:"lien"`
-	IntroTexte   string     `json:"intro_text"`
-	Date         string     `json:"date"`
-	Statut       bool       `json:"statut"`
-	CreatedAt    *time.Time `json:"createdAt"`
-	UpdatedAt    *time.Time `json:"updatedAt"`
-	CategorieID  int        `json:"categorieId"`
+	ID           int       `json:"id" gorm:"AUTO_INCREMENT"`
+	Titre        string    `json:"titre"`
+	Image        string    `json:"image"`
+	ArticleTexte string    `json:"article_text"`
+	Lien         string    `json:"lien"`
+	IntroTexte   string    `json:"intro_text"`
+	Date         string    `json:"date"`
+	Statut       bool      `json:"statut"`
+	CreatedAt    time.Time `json:"createdAt"`
+	UpdatedAt    time.Time `json:"updatedAt"`
+	CategorieID  int       `json:"categorieId"`
 }
 
 func (t *ActualiteArticle) TableName() string {
@@ -50,6 +50,18 @@ var Article = graphql.NewObject(graphql.ObjectConfig{
 		"categorieId":  &graphql.Field{Type: graphql.NewNonNull(graphql.Int)},
 	},
 })
+
+// AddActualiteMotCle insert a new ActualiteMotCle into database and returns
+// last inserted Id on success.
+func AddActualiteArticles(m *ActualiteArticle) error {
+	db, err := db.Conn()
+	if err != nil {
+		log.Error("AddActualiteArticle Can't connect to database ", err)
+	}
+	defer db.Close()
+
+	return db.Where(ActualiteArticle{Titre: m.Titre}).Attrs(ActualiteArticle{Titre: m.Titre}).FirstOrCreate(m).Error
+}
 
 func SelectAllArticle() (articles []*ActualiteArticle, err error) {
 	db, err := db.Conn()
