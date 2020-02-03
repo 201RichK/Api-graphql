@@ -32,20 +32,20 @@ func CreateMocle() *graphql.Field {
 			},
 		},
 		Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-			todo := &types.ActualiteMotCle{
+			mtcle := &types.ActualiteMotCle{
 				Mot:         params.Args["mot"].(string),
 				Statut:      params.Args["statut"].(bool),
 				CreatedAt:   time.Now(),
 				UpdatedAt:   time.Now(),
 				CategorieID: params.Args["categorie_id"].(int),
 			}
-			err := types.AddActualiteMotCle(todo)
+			err := types.AddActualiteMotCle(mtcle)
 			if err != nil {
 				log.Error("CreateMocle error ", err)
 				return nil, err
 			}
 
-			return todo, nil
+			return mtcle, nil
 		},
 	}
 }
