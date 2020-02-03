@@ -8,6 +8,8 @@ import (
 	_ "github.com/201RichK/graphql/db"
 	"github.com/201RichK/graphql/root"
 	_ "github.com/201RichK/graphql/types"
+	"github.com/201RichK/graphql/utils"
+	_ "github.com/201RichK/graphql/utils"
 	"github.com/friendsofgo/graphiql"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -15,6 +17,8 @@ import (
 )
 
 func main() {
+	conf := utils.Conf()
+
 	shematConfig := graphql.SchemaConfig{
 		Query: graphql.NewObject(graphql.ObjectConfig{
 			Name:   "query",
@@ -47,9 +51,9 @@ func main() {
 
 	port := os.Getenv("port")
 	if port == "" {
-		port = ":8090"
+		port = ":"+conf.Server.Port
 	}
-	log.Warnf("listen on port http://127.0.O.1%s", port)
+	log.Warnf("listen on port http://127.0.O.1:%s", port)
 
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(port), nil))
 }
