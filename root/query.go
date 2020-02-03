@@ -8,8 +8,13 @@ import (
 //GeRootFiels return all  the available queries
 func GetMotCleField() graphql.Fields {
 	return graphql.Fields{
-		"motCles":    queries.GetMotCleQuery(),
-		"articles":   queries.GetArticleQuery(),
+		//Mot cle
+		"motCles": queries.GetMotCleQuery(),
+
+		//Articles
+		"articles": queries.GetArticleQuery(),
+
+		//Catgeories
 		"categories": queries.GetCateoriesQueries(),
 	}
 }
