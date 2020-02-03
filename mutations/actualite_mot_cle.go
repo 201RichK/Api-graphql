@@ -40,7 +40,6 @@ func CreateMocle() *graphql.Field {
 				CategorieID: params.Args["categorie_id"].(int),
 			}
 			err := types.AddActualiteMotCle(todo)
-			log.Println(err)
 			if err != nil {
 				log.Error("CreateMocle error ", err)
 				return nil, err
