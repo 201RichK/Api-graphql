@@ -10,11 +10,11 @@ import (
 )
 
 type ActualiteCategorie struct {
-	ID               int        `json:"id" gorm:"AUTO_INCREMENT"`
-	Nom              string     `json:"nom"`
-	Statut           bool       `json:"statut"`
-	CreatedAt        *time.Time `json:"createdAt"`
-	UpdatedAt        *time.Time `json:"updatedAt"`
+	ID               int       `json:"id" gorm:"AUTO_INCREMENT"`
+	Nom              string    `json:"nom"`
+	Statut           bool      `json:"statut"`
+	CreatedAt        time.Time `json:"createdAt"`
+	UpdatedAt        time.Time `json:"updatedAt"`
 	ActualiteMotCle  []ActualiteMotCle
 	ActualiteArticle []ActualiteArticle
 }
@@ -67,6 +67,16 @@ var Catgr = graphql.NewObject(graphql.ObjectConfig{
 		},
 	},
 })
+
+func AddActualiteCtgr(m *ActualiteCategorie) error {
+	db, err := db.Conn()
+	defer db.Close()
+	if err != nil {
+		return err
+	}
+
+	return db.Where(ActualiteCategorie{Nom: m.Nom}).Attrs(ActualiteCategorie{Nom: m.Nom}).FirstOrCreate(m).Error
+}
 
 func SelectAllCtgr() (actCtgr []*ActualiteCategorie, err error) {
 	db, err := db.Conn()
