@@ -11,11 +11,14 @@ func GetMutationField() graphql.Fields {
 		//Mot cle Mutations
 		"createMocle":  mutation.CreateMocle(),
 		"updateMotCLe": mutation.UpdateMotCle(),
+		"deleteMotCle": mutation.DeleteMotCle(),
 
 		//Articles Mutations
-		"createArticle": mutation.CreateArticle(),
+		"createArticle":  mutation.CreateArticle(),
+		"updateArticles": mutation.UpdateArticles(),
 
 		//Categorie Mutations
-		"createCtgr": mutation.CreateCategorie(),
+		"createCategorie": mutation.CreateCategorie(),
+		"updateCategorie": mutation.UpdateCategorie(),
 	}
 }
