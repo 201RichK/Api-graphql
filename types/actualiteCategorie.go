@@ -107,3 +107,18 @@ func SelectAllctgrId(id int, table string) (ctgr []*ActualiteCategorie, err erro
 	}
 	return
 }
+
+//Update actualite mot cle
+func UpdateCategorie(m *ActualiteCategorie) (err error) {
+	db, err := db.Conn()
+	if err != nil {
+		return
+	}
+
+	defer db.Close()
+
+	if err = db.Model(&ActualiteCategorie{}).Where("id = ?", m.ID).Take(&ActualiteCategorie{}).Save(m).Error; err != nil {
+		return
+	}
+	return
+}
