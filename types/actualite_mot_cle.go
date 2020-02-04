@@ -97,9 +97,23 @@ func UpdateMotCle(m *ActualiteMotCle) (err error) {
 		return
 	}
 	defer db.Close()
-	if err = db.Model(&ActualiteMotCle{}).Where("id = ?", m.ID).Take(&ActualiteMotCle{}).Updates(m).Error; err != nil {
+	if err = db.Model(&ActualiteMotCle{}).Where("id = ?", m.ID).Take(&ActualiteMotCle{}).Save(m).Error; err != nil {
 		return
 	}
 
+	return
+}
+
+//Delete actualite mot cle
+func DeleteMotCle(m *ActualiteMotCle) (err error) {
+	db, err := db.Conn()
+	if err != nil {
+		return
+	}
+	defer db.Close()
+
+	if err = db.Model(&ActualiteMotCle{}).Where("id = ?", m.ID).Delete(&m).Error; err != nil {
+		return
+	}
 	return
 }
