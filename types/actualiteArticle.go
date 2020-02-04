@@ -94,3 +94,17 @@ func SelectAllArtId(id int, table string) (artcicle []*ActualiteArticle, err err
 	}
 	return
 }
+
+//Update actualite Articles
+func UpdateArticles(m *ActualiteArticle) (err error) {
+	db, err := db.Conn()
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	if err = db.Model(&ActualiteArticle{}).Where("id = ?", m.ID).Take(&ActualiteArticle{}).Save(m).Error; err != nil {
+		return
+	}
+
+	return
+}
