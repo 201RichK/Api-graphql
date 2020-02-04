@@ -59,3 +59,60 @@ func CreateArticle() *graphql.Field {
 		},
 	}
 }
+
+//mutation for update actualite mot cle
+func UpdateArticles() *graphql.Field {
+	return &graphql.Field{
+		Type:        types.Article,
+		Description: "Update an articles ",
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
+			"titre": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"image": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Boolean),
+			},
+			"article_text": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
+			"lien": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"intro_text": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"date": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"statut": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Boolean),
+			},
+			"categorieId": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			artcicles := &types.ActualiteArticle{
+				ID:           p.Args["id"].(int),
+				Titre:        p.Args["titre"].(string),
+				Image:        p.Args["image"].(string),
+				ArticleTexte: p.Args["article_text"].(string),
+				Lien:         p.Args["lien"].(string),
+				IntroTexte:   p.Args["intro_text"].(string),
+				Date:         p.Args["date"].(string),
+				Statut:       p.Args["statut"].(bool),
+				CategorieID:  p.Args["categorieId"].(int),
+			}
+
+			err := types.UpdateArticles(artcicles)
+			if err != nil {
+				return nil, err
+			}
+
+			return artcicles, nil
+		},
+	}
+}
