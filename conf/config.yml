@@ -11,7 +11,7 @@ server:
 
 #Database configuration
 database:
-    username: "postgres"
+    username: RichK
     password: "password"
     dbname: "media"
     dbPort: 5432
