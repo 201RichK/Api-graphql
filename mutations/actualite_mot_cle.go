@@ -86,3 +86,30 @@ func UpdateMotCle() *graphql.Field {
 		},
 	}
 }
+
+func DeleteMotCle() *graphql.Field {
+	return &graphql.Field{
+		Type:        types.MotCle,
+		Description: "Delete one mot cle",
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
+			"mot": &graphql.ArgumentConfig{
+				Type: graphql.String,
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			motCle := types.ActualiteMotCle{
+				ID:  p.Args["id"].(int),
+				Mot: p.Args["mot"].(string),
+			}
+
+			err := types.DeleteMotCle(&motCle)
+			if err != nil {
+				return nil, err
+			}
+			return "motCle", nil
+		},
+	}
+}
