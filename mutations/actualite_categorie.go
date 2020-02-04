@@ -35,3 +35,33 @@ func CreateCategorie() *graphql.Field {
 		},
 	}
 }
+
+func UpdateCategorie() *graphql.Field {
+	return &graphql.Field{
+		Type:        types.Catgr,
+		Description: "Update categories",
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Int),
+			},
+			"nom": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"statut": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.Boolean),
+			},
+		},
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			categorie := types.ActualiteCategorie{
+				ID:     p.Args["id"].(int),
+				Nom:    p.Args["nom"].(string),
+				Statut: p.Args["statut"].(bool),
+			}
+
+			if err := types.UpdateCategorie(&categorie); err != nil {
+				return nil, err
+			}
+			return categorie, nil
+		},
+	}
+}
