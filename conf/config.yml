@@ -11,13 +11,13 @@ server:
 
 #Database configuration
 database:
-    username: RichK
-    password: "password"
-    dbname: "media"
+    username: postgres
+    password: password
+    dbname: media
     dbPort: 5432
-    Sslmode: "disable"
+    Sslmode: disable
 
 #App security setting
 security:
-    privateKey: ""
+    privateKey: TopsecretSiGnInKEYFORourCompileAPIshhalfhlhfhfamgfugugfefvsfsigvhlzdvgvzsdksychzho!ç!'
     hash:
