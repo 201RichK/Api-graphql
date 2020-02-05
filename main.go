@@ -51,7 +51,7 @@ func main() {
 
 	port := os.Getenv("port")
 	if port == "" {
-		port = ":"+conf.Server.Port
+		port = ":" + conf.Server.Port
 	}
 	log.Warnf("listen on port http://127.0.O.1:%s", port)
 
